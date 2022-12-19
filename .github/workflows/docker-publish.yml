@@ -53,12 +53,11 @@ jobs:
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
       - name: Login to Public ECR
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: docker/login-action@v2
         with:
-          registry: public.ecr.aws
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-1
+          registry: 131842227326.dkr.ecr.ap-southeast-1.amazonaws.com/silentimage
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
