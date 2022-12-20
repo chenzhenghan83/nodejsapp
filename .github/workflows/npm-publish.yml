@@ -31,3 +31,35 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+  release:
+    needs: container
+    name: Process deployment manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: "☁️ Checkout manifest"
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.manifest_branch }}
+          repository: ${{ env.manifest_repo }}
+          token: ${{ secrets.PAT }}
+          path: ./MFT
+
+      - name: "✏ Write tag info of current build"
+        run: |
+          valuesFile=./MFT/argocd/ar2/helm/${{ env.app_name }}/values.yaml
+          oldTag=$(cat $valuesFile | grep tag: | head -n 1 | awk '{print $2}' | tr -d '\n')
+          echo "** $valuesFile ::: replacing $oldTag with ${{ needs.container.outputs.mytag }}"
+          sed -i "s|$oldTag|${{ needs.container.outputs.mytag }}|" $valuesFile
+      - name: "🖃 Commit changes of current build"
+        run: |
+          cd ./MFT
+          git config user.email "agilrad@stengg.com"
+          git config user.name "agilrad"
+          git commit -m "[auto] version updated" -a
+      - name: "🚀 Upload manifest"
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          directory: ./MFT
+          branch: ${{ env.manifest_branch }}
+          repository: ${{ env.manifest_repo }}
+          github_token: ${{ secrets.PAT }}
