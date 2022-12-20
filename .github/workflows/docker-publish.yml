@@ -111,13 +111,14 @@ jobs:
       - name: "✏ Write tag info of current build"
         run: |
           ls
+          cd app
           valuesFile=app/deployment.yaml
           oldTag=$(cat $valuesFile | grep tag: | head -n 1 | awk '{print $2}' | tr -d '\n')
           echo "** $valuesFile ::: replacing $oldTag with ${{ needs.container.outputs.mytag }}"
           sed -i "s|$oldTag|${{ needs.container.outputs.mytag }}|" $valuesFile
       - name: "🖃 Commit changes of current build"
         run: |
-          cd ./app
+          cd app
           git config user.email "chen.zhenghan@stengg.com"
           git config user.name "chenzhenghan83"
           git commit -m "[auto] version updated" -a
