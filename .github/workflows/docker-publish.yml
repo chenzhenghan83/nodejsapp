@@ -105,11 +105,15 @@ jobs:
 
       - name: "✏ Write tag info of current build"
         run: |
+          ls
+          pwd
+          cd /
+          ls
           valuesFile=deployment.yaml
           oldTag=$(cat $valuesFile | grep image: | head -n 1 | awk '{print $2}' | tr -d '\n')
           echo "** $valuesFile ::: replacing $oldTag with ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
           sed -i "s|$oldTag|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.build-and-push.outputs.digest }}|" $valuesFile
-        # sed -i "s|$oldTag|${{ needs.container.outputs.mytag }}|" $valuesFile
+        # sed -i "s|$oldTag|${{ needs.container.outputs.mytag }}:${{ steps.build-and-push.outputs.digest }}|" $valuesFile
       - name: "🖃 Commit changes of current build"
         run: |
           cd app
@@ -117,11 +121,7 @@ jobs:
           git config user.name "chenzhenghan83"
           git commit -m "[auto] version updated" -a
       - name: "🚀 Upload manifest"
-    #    #run: |
-    #    #  ls
-    #    #  cd app
-    #    #  ls
-    #    #  cd app
+   
         uses: ad-m/github-push-action@v0.6.0
         with:
           directory: app
