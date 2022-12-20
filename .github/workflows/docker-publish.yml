@@ -104,7 +104,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: master
-          repository: https://github.com/chenzhenghan83/argocdnodejsrepodeploy
+          repository: chenzhenghan83/argocdnodejsrepodeploy
           token: ${{ secrets.CDACCESSTOKEN }}
           path: ./app
 
@@ -125,6 +125,6 @@ jobs:
         with:
           directory: ./app
           branch: master
-          repository: https://github.com/chenzhenghan83/argocdnodejsrepodeploy
+          repository: chenzhenghan83/argocdnodejsrepodeploy
           github_token: ${{ secrets.CDACCESSTOKEN }}
 
