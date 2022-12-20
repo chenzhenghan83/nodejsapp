@@ -110,7 +110,7 @@ jobs:
 
       - name: "✏ Write tag info of current build"
         run: |
-          valuesFile=./app/deployment.yaml
+          valuesFile=./MFT/argocd/ar2/helm/${{ env.app_name }}/values.yaml
           oldTag=$(cat $valuesFile | grep tag: | head -n 1 | awk '{print $2}' | tr -d '\n')
           echo "** $valuesFile ::: replacing $oldTag with ${{ needs.container.outputs.mytag }}"
           sed -i "s|$oldTag|${{ needs.container.outputs.mytag }}|" $valuesFile
@@ -123,7 +123,7 @@ jobs:
       - name: "🚀 Upload manifest"
         uses: ad-m/github-push-action@v0.6.0
         with:
-          directory: ./app
+          directory: ./MFT/argocd/ar2/helm/${{ env.app_name }}/values.yaml
           branch: master
           repository: chenzhenghan83/argocdnodejsrepodeploy
           github_token: ${{ secrets.CDACCESSTOKEN }}
