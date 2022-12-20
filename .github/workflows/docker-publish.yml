@@ -124,16 +124,16 @@ jobs:
           git config user.email "chen.zhenghan@stengg.com"
           git config user.name "chenzhenghan83"
           git commit -m "[auto] version updated" -a
-   #   - name: "🚀 Upload manifest"
+      - name: "🚀 Upload manifest"
     #    #run: |
     #    #  ls
     #    #  cd app
     #    #  ls
     #    #  cd app
-    #    uses: ad-m/github-push-action@v0.6.0
-    #    with:
-    #      directory: app/deployment.yaml
-    #      branch: ${{ env.manifest_branch }}
-    #      repository: chenzhenghan83/argocdnodejsrepodeploy
-    #      github_token: ${{ secrets.CDACCESSTOKEN }}
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          directory: app/deployment.yaml
+          branch: ${{ env.manifest_branch }}
+          repository: chenzhenghan83/argocdnodejsrepodeploy
+          github_token: ${{ secrets.CDACCESSTOKEN }}
 
