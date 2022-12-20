@@ -146,3 +146,45 @@ jobs:
           repository: chenzhenghan83/argocdnodejsrepodeploy
           github_token: ${{ secrets.CDACCESSTOKEN }}
 
+  release2:
+    needs: build
+    name: Process deployment manifest2
+    runs-on: ubuntu-latest
+    steps:
+      - name: "☁️ Checkout manifest"
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.manifest_branch }}
+          repository: chenzhenghan83/argocdnodejsrepodeploy
+          token: ${{ secrets.CDACCESSTOKEN }}
+          path: app
+
+      - name: "✏ Write tag info of current build"
+        run: |
+          ls
+          cd app
+          ls
+          cd app
+          valuesFile=deployment.yaml
+          oldTag=$(cat $valuesFile | grep image: | head -n 1 | awk '{print $2}' | tr -d '\n')
+          echo "** $valuesFile ::: replacing $oldTag with ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
+          sed -i "s|$oldTag|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:master|" $valuesFile
+        # sed -i "s|$oldTag|${{ needs.container.outputs.mytag }}|" $valuesFile
+      - name: "🖃 Commit changes of current build"
+        run: |
+          cd app
+          git config user.email "chen.zhenghan@stengg.com"
+          git config user.name "chenzhenghan83"
+          git commit -m "[auto] version updated" -a
+      - name: "🚀 Upload manifest"
+    #    #run: |
+    #    #  ls
+    #    #  cd app
+    #    #  ls
+    #    #  cd app
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          directory: app
+          branch: ${{ env.manifest_branch }}
+          repository: chenzhenghan83/argocdnodejsrepodeploy
+          github_token: ${{ secrets.CDACCESSTOKEN }}
