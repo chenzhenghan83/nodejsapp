@@ -147,7 +147,7 @@ jobs:
           github_token: ${{ secrets.CDACCESSTOKEN }}
 
   release2:
-    needs: build
+    needs: release
     name: Process deployment manifest2
     runs-on: ubuntu-latest
     steps:
