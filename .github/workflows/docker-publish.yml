@@ -132,7 +132,7 @@ jobs:
     #    #  cd app
         uses: ad-m/github-push-action@v0.6.0
         with:
-          directory: app/deployment.yaml
+          directory: app
           branch: ${{ env.manifest_branch }}
           repository: chenzhenghan83/argocdnodejsrepodeploy
           github_token: ${{ secrets.CDACCESSTOKEN }}
