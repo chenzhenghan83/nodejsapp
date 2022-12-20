@@ -145,6 +145,10 @@ jobs:
           branch: ${{ env.manifest_branch }}
           repository: chenzhenghan83/argocdnodejsrepodeploy
           github_token: ${{ secrets.CDACCESSTOKEN }}
+      - name: Sleep for 10s
+        uses: juliangruber/sleep-action@v1
+        with:
+         time: 240s
 
   release2:
     needs: release
