@@ -97,7 +97,7 @@ jobs:
         
         
   release:
-   # needs: container
+    needs: build
     name: Process deployment manifest
     runs-on: ubuntu-latest
     steps:
