@@ -122,7 +122,7 @@ jobs:
           valuesFile=deployment.yaml
           oldTag=$(cat $valuesFile | grep image: | head -n 1 | awk '{print $2}' | tr -d '\n')
           echo "** $valuesFile ::: replacing $oldTag with ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ build.steps.meta.outputs.tags }}"
-          sed -i "s|$oldTag|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{build.steps.meta.outputs.tags }}|" $valuesFile
+          sed -i "s|$oldTag|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ build.steps.meta.outputs.tags }}|" $valuesFile
       - name: "🖃 Commit changes of current build"
         run: |
           cd app
