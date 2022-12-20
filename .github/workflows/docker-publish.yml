@@ -117,7 +117,8 @@ jobs:
         # sed -i "s|$oldTag|${{ needs.container.outputs.mytag }}:${{ steps.build-and-push.outputs.digest }}|" $valuesFile
       - name: "🖃 Commit changes of current build"
         run: |
-        
+          cd app
+          ls
           git config user.email "chen.zhenghan@stengg.com"
           git config user.name "chenzhenghan83"
           git commit -m "[auto] version updated" -a
