@@ -109,6 +109,7 @@ jobs:
           cd app
           ls
           cd app
+          ls
           valuesFile=deployment.yaml
           oldTag=$(cat $valuesFile | grep image: | head -n 1 | awk '{print $2}' | tr -d '\n')
           echo "** $valuesFile ::: replacing $oldTag with ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
@@ -116,7 +117,7 @@ jobs:
         # sed -i "s|$oldTag|${{ needs.container.outputs.mytag }}:${{ steps.build-and-push.outputs.digest }}|" $valuesFile
       - name: "🖃 Commit changes of current build"
         run: |
-          #cd app
+          # cd app
           git config user.email "chen.zhenghan@stengg.com"
           git config user.name "chenzhenghan83"
           git commit -m "[auto] version updated" -a
