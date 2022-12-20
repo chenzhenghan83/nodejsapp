@@ -113,7 +113,8 @@ jobs:
           ls
           cd app
           ls
-          valuesFile=app/deployment.yaml
+          cd app
+          valuesFile=deployment.yaml
           oldTag=$(cat $valuesFile | grep tag: | head -n 1 | awk '{print $2}' | tr -d '\n')
           echo "** $valuesFile ::: replacing $oldTag with ${{ needs.container.outputs.mytag }}"
           sed -i "s|$oldTag|${{ needs.container.outputs.mytag }}|" $valuesFile
