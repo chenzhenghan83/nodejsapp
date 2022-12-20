@@ -103,7 +103,7 @@ jobs:
       - name: "☁️ Checkout manifest"
         uses: actions/checkout@v3
         with:
-          ref: master
+          ref: ${{ env.manifest_branch }}
           repository: chenzhenghan83/argocdnodejsrepodeploy
           token: ${{ secrets.CDACCESSTOKEN }}
           path: ./app
@@ -124,7 +124,7 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
           directory: ./MFT/argocd/ar2/helm/${{ env.app_name }}/values.yaml
-          branch: master
+          branch: ${{ env.manifest_branch }}
           repository: chenzhenghan83/argocdnodejsrepodeploy
           github_token: ${{ secrets.CDACCESSTOKEN }}
 
