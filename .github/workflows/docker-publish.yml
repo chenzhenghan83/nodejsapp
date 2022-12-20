@@ -106,12 +106,12 @@ jobs:
           ref: ${{ env.manifest_branch }}
           repository: chenzhenghan83/argocdnodejsrepodeploy
           token: ${{ secrets.CDACCESSTOKEN }}
-          path: ./app
+          path: app
 
       - name: "✏ Write tag info of current build"
         run: |
           ls
-          valuesFile=./MFT/argocd/ar2/helm/${{ env.app_name }}/values.yaml
+          valuesFile=app/deployment.yaml
           oldTag=$(cat $valuesFile | grep tag: | head -n 1 | awk '{print $2}' | tr -d '\n')
           echo "** $valuesFile ::: replacing $oldTag with ${{ needs.container.outputs.mytag }}"
           sed -i "s|$oldTag|${{ needs.container.outputs.mytag }}|" $valuesFile
