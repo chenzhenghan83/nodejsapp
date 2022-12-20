@@ -125,10 +125,15 @@ jobs:
           git config user.name "chenzhenghan83"
           git commit -m "[auto] version updated" -a
       - name: "🚀 Upload manifest"
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          directory: app/app/deployment.yaml
-          branch: ${{ env.manifest_branch }}
-          repository: chenzhenghan83/argocdnodejsrepodeploy
-          github_token: ${{ secrets.CDACCESSTOKEN }}
+        run: |
+          ls
+          cd app
+          ls
+          cd app
+      #  uses: ad-m/github-push-action@v0.6.0
+      #  with:
+      #    directory: app/app/deployment.yaml
+      #    branch: ${{ env.manifest_branch }}
+      #    repository: chenzhenghan83/argocdnodejsrepodeploy
+      #    github_token: ${{ secrets.CDACCESSTOKEN }}
 
